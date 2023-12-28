@@ -1,0 +1,231 @@
+/*提示框*/
+.iceAlertPanel{
+    left: 0;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;/*设置一个100的层级*/
+    opacity: 0;
+    transition: .25s .05s;
+    pointer-events: none;
+    display: none;
+    /*用户不会选到文字*/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+.iceAlertCover{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    position: fixed;
+    backdrop-filter: blur(1px);
+}
+.iceAlertTextPanel{
+    position: fixed;
+    font-size: 35px;
+    font-weight: 525;
+    color: rgba(255,255,255,1);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    height: 150px;
+    opacity: .75;
+}
+.iceAlertTextPanelOutLine{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    border: rgba(255,255,255,.5) 2px dashed;
+    border-radius: 0 25px 0 10px;
+    overflow: hidden;
+}
+.iceAlertText{
+    position: absolute;
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    white-space:nowrap;
+}
+.iceAlertSquare{
+    position: absolute;
+    margin-left: 0;
+    margin-top: 0;
+    opacity: .75;
+    filter: blur(2px);
+}
+.iceAlertSquare span{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    border: rgba(255,255,255,75) 2px solid;
+    transform: rotate(45deg);
+}
+.iceAlertSquare span:nth-child(1){
+    margin-left: 60px;
+    margin-top: -50px;
+    animation: iceAlertSquareMove 5s infinite linear alternate-reverse;
+}
+.iceAlertSquare span:nth-child(2){
+    margin-left: -95px;
+    margin-top: 20px;
+    animation: iceAlertSquareMove 4s .5s infinite linear alternate;
+}
+.iceAlertSquare span:nth-child(3){
+    margin-left: -30px;
+    margin-top: -115px;
+    animation: iceAlertSquareMove 7.5s infinite linear alternate-reverse;
+}
+.iceAlertSquare span:nth-child(4){
+    margin-left: 25px;
+    margin-top: 175px;
+    animation: iceAlertSquareMove 6s .25s infinite linear alternate;
+}
+.iceAlertSquare span::after{
+    content: '';
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    border: rgba(255,255,255,75) 2px solid;
+    margin-left: 8px;
+    margin-top: 8px;
+}
+.iceLargeSquare{
+    position: fixed;
+    height: 80px;
+    width: 80px;
+    border: rgba(255,255,255,1) 2px solid;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+.iceLargeSquare span{
+    position: absolute;
+    margin-left: 5px;
+    margin-top: 15px;
+}
+.iceSmallSquare{
+    position: fixed;
+    height: 20px;
+    width: 20px;
+    border: rgba(255,255,255,1) 2px solid;
+    margin-left: 585px;
+    margin-top: 135px;
+    transition: .25s;
+    transform: rotate(0deg);
+}
+.iceAlertYes{
+    position: absolute;
+    margin-left: 45px;
+    margin-top: 15px;
+    width: 80px;
+    height: 40px;
+}
+.iceAlertYes span{
+    position: absolute;
+    margin-top: -5px;
+    margin-left: 5px;
+}
+.iceAlertYes:hover{
+    margin-left: 44px;
+    margin-top: 14px;
+    border: rgba(0,0,0,.25) 1px solid;
+    box-shadow:0 0 5px 1px rgba(255,255,255,.5);
+}
+.iceAlertNo{
+    position: absolute;
+    margin-left: 498px;
+    margin-top: 98px;
+    width: 80px;
+    height: 40px;
+}
+.iceAlertNo span{
+    position: absolute;
+    margin-top: -5px;
+    margin-left: 4px;
+}
+.iceAlertNo:hover{
+    margin-top: 97px;
+    margin-left: 497px;
+    border: rgba(0,0,0,.25) 1px solid;
+    box-shadow:0 0 5px 1px rgba(255,255,255,.5);
+}
+.particleSquare{
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    top: 100px;
+    left: 100px;
+    transform: rotate(45deg) translate(-50%,-50%);
+    border: rgba(255,255,255,.75) 2px solid;
+    animation: particleSquareShow 2s linear;
+    animation-fill-mode: forwards;
+}
+.particleSquare:after{
+    content: '';
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    margin-top: 3px;
+    margin-left: 3px;
+    border: rgba(255,255,255,.75) 2px solid;
+}
+@keyframes iceAlertTextPanelOutLineMove {
+    0%{width: 0;margin-left: 50%;opacity: 0;}
+    62%{opacity: 0;}
+    62.5%{width: 0;margin-left: 50%;opacity: 1;animation-timing-function: cubic-bezier(.55,.07,.22,1.01)}
+    100%{width: 100%;height: 100%;margin-left: 0;margin-top: 0;}
+}
+@keyframes iceAlertSquareLineMove {
+    0%{margin-left: 50%;margin-top: 100%;}
+    58%{margin-left: 50%;margin-top: 0;}
+    59%{margin-left: 50%;margin-top: 0;animation-timing-function: ease-in-out}
+    97.5%{margin-left: 0;margin-top: 0;}
+    100%{margin-left: 0;margin-top: 0;}
+}
+@keyframes iceAlertSquareMove {
+    0%{transform: translate(0,0) rotate(45deg)}
+    100%{transform: translate(5px,5px) rotate(45deg)}
+}
+@keyframes iceLargeSquareMove {
+    0%{margin-left: calc(50% - 40px);margin-top: 100%;}
+    60%{margin-left: calc(50% - 40px);margin-top: -50px;}
+    62%{margin-left: calc(50% - 40px);margin-top: -50px;animation-timing-function: cubic-bezier(.57,.15,.49,1.06)}
+    100%{margin-left: -50px;margin-top: -50px;}
+}
+@keyframes iceLargeSquareRotate {
+    0%{transform: rotate(35deg);}
+    15%{transform: rotate(40deg);}
+    30%{transform: rotate(49deg);}
+    55%{transform: rotate(45deg);}
+    60%{transform: rotate(45deg);}
+    92.5%{transform: rotate(-90deg);}
+    100%{transform: rotate(-90deg);}
+}
+@keyframes iceSmallSquareMove {
+    0%{margin-left: calc(50% - 10px);margin-top: calc(100% + 30px);}
+    58%{margin-left: calc(50% - 10px);margin-top: 135px;}
+    59.5%{margin-left: calc(50% - 10px);margin-top: 135px;animation-timing-function: cubic-bezier(.57,.15,.49,1.06)}
+    97.5%{margin-left: 585px;margin-top: 135px;}
+    100%{margin-left: 585px;margin-top: 135px;}
+}
+@keyframes iceSmallSquareRotate {
+    0%{transform: rotate(45deg);}
+    60%{transform: rotate(45deg);}
+    92.5%{transform: rotate(180deg);}
+    100%{transform: rotate(180deg);}
+}
+@keyframes iceLargeSquareTextShow {
+    0%{opacity: 0}
+    75%{opacity: 0}
+    100%{opacity: .75}
+}
+@keyframes particleSquareShow {
+    0%{opacity: 1}
+    50%{opacity: 0}
+    100%{opacity: 0;top:400%}
+}
