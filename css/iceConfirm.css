@@ -107,6 +107,7 @@
     position: absolute;
     margin-left: 5px;
     margin-top: 15px;
+    transform: rotate(-25deg);
 }
 .iceSmallSquare{
     position: fixed;
