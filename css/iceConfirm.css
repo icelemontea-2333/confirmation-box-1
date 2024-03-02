@@ -1,16 +1,14 @@
-/*提示框*/
 .iceAlertPanel{
     left: 0;
     top: 0;
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: 100;/*设置一个100的层级*/
+    z-index: 100;
     opacity: 0;
     transition: .25s .05s;
     pointer-events: none;
     display: none;
-    /*用户不会选到文字*/
     -webkit-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;
