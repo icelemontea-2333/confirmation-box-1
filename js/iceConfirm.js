@@ -1,26 +1,23 @@
 
-let isIceConfirmInit = false;//是否初始化
+let isIceConfirmInit = false;
 
-/*标题限制两字，文字限制15以内,-1代表默认*/
+/*title(2)，text(<=15),-1 default*/
 function openIceConfirm(title,text){
     initIceConfirm();
     let iceConfirm = new Promise((resolve,reject) => {
-        /*动画*/
         if (localStorage.getItem("SKIP_ICE_ANIMATION") === "true")
             iceConfirmUtils.animationSkip();
         else
             iceConfirmUtils.animationRun();
 
-        /*添加标题和文字*/
         if (title && title.length === 2)
             document.getElementById('iceAlertTitle').innerText = title;
         if (text && text.length <= 15 && text !== -1)
             document.getElementById('iceAlertText').innerText = text;
 
-        /*重置写入*/
         document.getElementById('iceAlertYes').style.pointerEvents = 'auto';
-        document.getElementById('iceAlertYes').innerHTML = '<span>确认</span>';
-        document.getElementById('iceAlertNo').innerHTML = '<span>取消</span>';
+        document.getElementById('iceAlertYes').innerHTML = '<span>yes</span>';
+        document.getElementById('iceAlertNo').innerHTML = '<span>no</span>';
 
         document.getElementById('iceAlertYes').onclick = ()=>{
             iceConfirmUtils.animationClear();
@@ -34,14 +31,13 @@ function openIceConfirm(title,text){
     return iceConfirm;
 }
 
-/*旧版 依次传入方法名、参数（对象，可以跳过不传）、标题、文字、模式（1：提示框 默认告警框）*/
-/*标题限制两字，文字限制15以内,-1代表默认*/
-/*结果receive.result、参数receive.data*/
+/*old method、value（obj）、title、text、mode（1：tips）*/
+/*title,-1-default*/
+/*result-receive.result、value-receive.data*/
 function openIceAlert(name,value,title,text,mode){
     initIceConfirm();
     if (value === undefined)
         value = {}
-    //无value的情况
     if (value.constructor !== Object && text === undefined && mode === undefined){
         text = title;
         title = value;
@@ -51,31 +47,26 @@ function openIceAlert(name,value,title,text,mode){
         title = value;
     }
 
-    /*添加标题和文字*/
     if (title && title.length === 2)
         document.getElementById('iceAlertTitle').innerText = title;
     if (text && text.length <= 15 && text !== -1)
         document.getElementById('iceAlertText').innerText = text;
 
-    /*动画*/
     if (localStorage.getItem("SKIP_ICE_ANIMATION") === "true")
         iceConfirmUtils.animationSkip();
     else
         iceConfirmUtils.animationRun();
 
-    /*写入*/
     document.getElementById('iceAlertYes').style.pointerEvents = 'auto';
-    document.getElementById('iceAlertYes').innerHTML = '<span onclick="choseIceAlert(' + name + ',true,' + JSON.stringify(value).replace(/\"/g, "'") +')">确认</span>';
-    document.getElementById('iceAlertNo').innerHTML = '<span onclick="choseIceAlert(' + name + ',false,' + JSON.stringify(value).replace(/\"/g, "'") +')">取消</span>';
+    document.getElementById('iceAlertYes').innerHTML = '<span onclick="choseIceAlert(' + name + ',true,' + JSON.stringify(value).replace(/\"/g, "'") +')">yes</span>';
+    document.getElementById('iceAlertNo').innerHTML = '<span onclick="choseIceAlert(' + name + ',false,' + JSON.stringify(value).replace(/\"/g, "'") +')">no</span>';
 
-    /*模式 1代表提示框*/
     switch (mode){
         case 1:
             document.getElementById('iceAlertYes').style.pointerEvents = 'none';
             document.getElementById('iceAlertYes').innerHTML = '';
             if (name === null || name === undefined || name === ''){
-                /*写入变更*/
-                document.getElementById('iceAlertNo').innerHTML = '<span onclick="choseIceAlert(function (){},false,' + JSON.stringify(value).replace(/\"/g, "'") +')">取消</span>';
+                document.getElementById('iceAlertNo').innerHTML = '<span onclick="choseIceAlert(function (){},false,' + JSON.stringify(value).replace(/\"/g, "'") +')">no</span>';
             }
             break;
         default:
@@ -83,10 +74,8 @@ function openIceAlert(name,value,title,text,mode){
     }
 }
 
-/*关闭*/
 function choseIceAlert(name,result,value){
     iceConfirmUtils.animationClear();
-    /*合并*/
     let receive = {result,data:value}
     if (name !== undefined)
         name(receive);
@@ -94,7 +83,6 @@ function choseIceAlert(name,result,value){
 
 const iceConfirmUtils = {
     animationRun(){
-        /*动画*/
         document.getElementById('iceAlertPanel').style.display = 'block';
         document.getElementById('iceAlertPanel').style.opacity = '1';
         document.getElementById('iceAlertPanel').style.pointerEvents = 'auto';
@@ -103,7 +91,6 @@ const iceConfirmUtils = {
         document.getElementById('iceSmallSquare').style.animation = 'iceSmallSquareMove 1.5s cubic-bezier(.16,.39,.57,.98),iceSmallSquareRotate 1.5s linear';
         document.getElementById('iceLargeSquare').style.animation = 'iceLargeSquareMove 1.5s cubic-bezier(.16,.39,.57,.98),iceLargeSquareRotate 1.5s linear';
         document.getElementById('iceAlertTitle').style.animation = 'iceLargeSquareTextShow 2s linear';
-        /*粒子*/
         let particleSquareInterval = setInterval(()=>{
             let particleSquare = document.createElement('span');
             particleSquare.className = 'particleSquare'
@@ -114,13 +101,11 @@ const iceConfirmUtils = {
                 particleSquare.remove();
             },1000)
         },80)
-        /*取消粒子*/
         setTimeout(()=>{
             clearInterval(particleSquareInterval);
         },600)
     },
     animationSkip(){
-        /*动画*/
         document.getElementById('iceAlertPanel').style.display = 'block';
         document.getElementById('iceAlertPanel').style.opacity = '1';
         document.getElementById('iceAlertPanel').style.pointerEvents = 'auto';
@@ -128,7 +113,6 @@ const iceConfirmUtils = {
         document.getElementById('iceSmallSquare').style.transform = 'rotate(45deg)'
     },
     animationClear(){
-        /*取消动画*/
         document.getElementById('iceAlertPanel').style.display = 'none';
         document.getElementById('iceAlertPanel').style.opacity = '0';
         document.getElementById('iceAlertPanel').style.pointerEvents = 'none';
@@ -140,9 +124,7 @@ const iceConfirmUtils = {
     }
 }
 
-//模式切换
 function onclickIceSmallSquare(reset){
-    //旋转次数
     let iceSmallSquareRotateTurn;
     let init = false;
     return ()=>{
@@ -166,7 +148,6 @@ function onclickIceSmallSquare(reset){
     }
 }
 
-/*初始化*/
 function initIceConfirm(){
     if (isIceConfirmInit)
         return true;
@@ -179,7 +160,7 @@ function initIceConfirm(){
         <div class="iceAlertTextPanel" id="iceAlertTextPanel">
             <span class="iceLargeSquare" id="iceLargeSquare">
                 <span class="iceAlertTitle" id="iceAlertTitle">
-                    确认
+                    yes
                 </span>
             </span>
             <span class="iceAlertSquare" id="iceAlertSquare">
@@ -189,9 +170,9 @@ function initIceConfirm(){
                 <span></span>
             </span>
             <div class="iceAlertTextPanelOutLine" id="iceAlertTextPanelOutLine">
-                <span class="iceAlertText" id="iceAlertText">确定要取消喵？</span>
-                <span class="iceAlertYes" id="iceAlertYes"><span>确认</span></span>
-                <span class="iceAlertNo" id="iceAlertNo"><span>取消</span></span>
+                <span class="iceAlertText" id="iceAlertText">title</span>
+                <span class="iceAlertYes" id="iceAlertYes"><span>yes</span></span>
+                <span class="iceAlertNo" id="iceAlertNo"><span>no</span></span>
             </div>
             <span class="iceSmallSquare" id="iceSmallSquare" onclick="onclickIceSmallSquare()()"></span>
         </div>`
